@@ -9,10 +9,10 @@ tags: [keybase,jekyll]
 It's easy to create personal site like this one with jekyll and host it on keybase.
 
 #### 1. Create website in jekyll
-Follow diligently instruction on this site: [https://jekyllrb.com/docs/](https://jekyllrb.com/docs/)
+To install ruby and all other prerequisities for jekyll, follow diligently instruction with all links on this site: [https://jekyllrb.com/docs/](https://jekyllrb.com/docs/)
 
 #### 2. Optionally replace theme
-Once I had step one working, I've replaced whole project folder with this theme [https://github.com/ronv/sidey](https://github.com/ronv/sidey)
+Once I had step one working, I've replaced whole project folder with this theme [https://github.com/ronv/sidey](https://github.com/ronv/sidey). (I've only added small tweaks to make it working for keybase pages: [https://github.com/janheski/sidey](https://github.com/janheski/sidey)).
 
 #### 3. Change content
 Change content as you like, it needs to be your site :)
