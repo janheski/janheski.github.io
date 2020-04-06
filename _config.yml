@@ -1,5 +1,5 @@
 site: Sidey
-url: https://janheski.keybase.pub/
+url: https://janheski.keybase.pub
 title: janheski personal site
 description: You can expect topics about ServiceNow, Keybase, Stellar and Christianity.
 twitter:
@@ -11,8 +11,8 @@ author:
   name: janheski
   avatar:
   email: #youremail
-  url: https://janheski.keybase.pub/
-permalink: pretty
+  url: https://janheski.keybase.pub
+permalink: date
 
 baseurl: ""
 
@@ -37,10 +37,10 @@ plugins:
 collections:
   pages:
     output: true
-    permalink: /:name
+    permalink: /:name:output_ext
   posts:
     output: true
-    permalink: /:year/:month/:day/:slug
+    permalink: /:year/:month/:day/:slug:output_ext
   
 defaults:
   -

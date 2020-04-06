@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/janheski
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://janheski.keybase.pub
+  * I am janheski (https://keybase.io/janheski) on keybase.
+  * I have a public key ASAqGLlU4Iuu7EWvcT91Mt_-ljhXN-rZhbBZDnGweLypLQo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01208b362c7388b990fad784c3703b6e6dffc85bdfe60928f2a3d447b49c6db00fe10a",
+      "host": "keybase.io",
+      "kid": "01202a18b954e08baeec45af713f7532dffe96385737ead985b0590e71b078bca92d0a",
+      "uid": "54aa4d5306c65882412d3c0ca571b819",
+      "username": "janheski"
+    },
+    "merkle_root": {
+      "ctime": 1586125873,
+      "hash": "563e3a6a613252ea2cb87660ae5f2056b857fb3de2afd2d6512d394fbb8204e89a33537d67db8a637bee4ee874607d7df84479ba4121f64d1ae664dda7b29569",
+      "hash_meta": "03efaee1871cadfb1885dce7a83a953eeb7d4673472c6e239a59bb71292212eb",
+      "seqno": 15776416
+    },
+    "service": {
+      "entropy": "ML+m/aT7DyNysgKlvf7g0KCC",
+      "hostname": "janheski.keybase.pub",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "5.3.0"
+  },
+  "ctime": 1586125933,
+  "expire_in": 504576000,
+  "prev": "a36047fddfc2bebe91787e1ef4620f8ca8884732524a3615427b6b7662806f15",
+  "seqno": 94,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgKhi5VOCLruxFr3E/dTLf/pY4Vzfq2YWwWQ5xsHi8qS0Kp3BheWxvYWTESpcCXsQgo2BH/d/Cvr6ReH4e9GIPjKiIRzJSSjYVQntrdmKAbxXEIK/oEo1sBiRJAhn1KSkfuCBb9LxmEZp7pX4Rwb7+uR7YAgHCo3NpZ8RAotWfdksnhfj17ArUu1N19K866/4eG8T2xjYR/5/fk5quXe9BQdpkigZDpv7+NAIqXAniPZUlnsdb6M1s8DsUBKhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIB1ReHYZphSvocL4ndVBqeo6S2UxYMKTVkEdqZjZ/L8No3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/janheski
+
+==================================================================

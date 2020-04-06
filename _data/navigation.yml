@@ -2,8 +2,8 @@ links:
 - title: Writing
   url: /
 - title: About
-  url: /about
+  url: /about.html
 - title: Search
-  url: /search
+  url: /search.html
 - title: Rss
   url: /atom.xml
