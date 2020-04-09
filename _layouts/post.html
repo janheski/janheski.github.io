@@ -1,13 +1,20 @@
 ---
-layout: default
+layout: stellar
 ---
 
 <section class="post">
-  <h2>{{ page.title }}</h2>
-<!--CONTENT START-->
+<!--STELLARLIKE CONTENT START-->
+<h2>{{ page.title }}</h2>
 {{ content }}
-<!--CONTENT END-->  
+<!--STELLARLIKE CONTENT END-->  
 
   <span class="meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time> &middot; {% for tag in page.tags %}
     <a href="/tag/{{tag}}">{{tag}}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</span>
+
+
+  {% if page.issuing_account %}
+  <p class="issuingAccount">
+  Asset issuing account: <!--ISSUING ACCOUNT BEGIN-->{{ page.issuing_account }}<!--ISSUING ACCOUNT END-->
+  </p>
+  {% endif %}
 </section>
