@@ -209,22 +209,5 @@
         messageEl.setAttribute("class", level);
     }
 
-
-    ///
-    /// Functions when asset already exists
-    ///
-
-    function checkContentCorrectness() {
-        // TODO
-    }
-
-    function colourContent() {
-        // TODO
-    }
-
-    function displayContentNotCorrect() {
-        // TODO
-    }
-
     return [stellarLike, assetPriceOnChange, keybaseUserChanged, createTransaction];
 })();  
