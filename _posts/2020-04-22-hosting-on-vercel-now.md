@@ -17,7 +17,7 @@ If You don't have now vercel already installed on Your machine You need to do it
 If it doesn't work, you probably need to install now.
 
 #### 1b. Install now
-type `npm i now@latest` and it should help. Then return to point 1.
+type `npm i now@latest -g` and it should help. Then return to point 1.
 
 #### 1c. Setup vercel account
 You probably need to setup vercel account so follow their guide.
