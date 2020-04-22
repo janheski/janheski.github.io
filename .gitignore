@@ -7,4 +7,9 @@ Gemfile.lock
 .jekyll-cache
 .git
 _site
+<<<<<<< .merge_file_a11764
 .now/
+=======
+
+.now
+>>>>>>> .merge_file_a04496
