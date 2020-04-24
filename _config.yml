@@ -20,8 +20,6 @@ highlighter: rouge
 
 exclude:
   - .jekyll-cache
-
-include: [_plugins]
   
 compress_html:
   clippings: all
