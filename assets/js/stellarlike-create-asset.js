@@ -1,29 +1,41 @@
-[stellarLike, assetPriceOnChange, keybaseUserChanged, createTransaction] = (function() {
-    var assetSourceAccount = checkAssetAccount();
-    if(!assetSourceAccount) {
-        createStellarLikeButton();
-    }
-    else {
-        var contentCorrect = checkContentCorrectness();
-        if(contentCorrect) {
-            colourContent();
-        }
-        else {
-            displayContentNotCorrect();
-        }
-    }
 
+
+[stellarLike, assetPriceOnChange, keybaseUserChanged, createTransaction] = (function() {
+    var assetSourceAccount = '';
     var asset = {initialPrice: 10};
 
-
-    function checkAssetAccount() {
-        // TODO
-        return "";
+    function ready(fn) {
+        if (document.readyState != 'loading'){
+            fn();
+        } else {
+            document.addEventListener('DOMContentLoaded', fn);
+        }
     }
 
-    ///
-    /// Functions to create asset
-    ///
+    ready(start);
+
+    function start() {
+        assetSourceAccount = getAssetAccount();
+
+        console.log("assetSourceAccount:" + assetSourceAccount);
+    
+        if(!assetSourceAccount) {
+            console.log("create asset: Create asset!")
+            createStellarLikeButton();
+        }
+        else {
+            console.log("create asset: Do nothing")
+            // Do nothing, this case is handled by stellarlike-trade.js
+        }
+    }
+
+    function getAssetAccount() {
+        let sourceHtml = document.getElementsByTagName('html')[0].innerHTML;
+        let issuingAccountRegex = /<!--ISSUING ACCOUNT BEGIN-->(.*)<!--ISSUING ACCOUNT END-->/m;
+        var issuingAccount = sourceHtml.match(issuingAccountRegex) ? sourceHtml.match(issuingAccountRegex)[1] : "";
+
+        return issuingAccount;
+    }
 
     function createStellarLikeButton() {
         var buttonTemplate = `<div class="stellarlike">
@@ -141,9 +153,8 @@
         document.getElementById('stellarAccountId').value = stellarAccountId;
     }
 
-    function getURL() {
-        // TODO
-        return "";
+    function getURL() {        
+        return document.location.href;
     }
 
     function createTransaction() {

@@ -2,7 +2,7 @@
 title: Create token from article/blog post
 description: How to create token - StellarLike - Asset on Stellar network which represents article text
 summary: This blog post describes how to create token - a new asset on Stellar network - StellarLike - which represents article text. The length of text equals number of assets created. 
-issuing_account: 12345
+issuing_account: dd
 tags: [stellar, token, StellarLike, asset]
 ---
 
