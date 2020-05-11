@@ -3,7 +3,7 @@ title: Dobra wiadomość
 description: Dobra wiadomość o Jezusie Chrystusie i Królestwie Bożym
 summary: Dobra wiadomość o Jezusie Chrystusie i Królestwie Bożym
 issuing_account: 
-tags: [Jezus]
+tags: [jezus]
 ---
 
 > "Albo tych osiemnastu, na których upadła wieża w Syloe i zabiła ich; czy wydaje się wam, że oni byli bardziej winni niż wszyscy ludzie mieszkający w Jerozolimie? 
