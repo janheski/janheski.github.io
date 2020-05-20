@@ -1,5 +1,3 @@
-
-
 [stellarLike, assetPriceOnChange, keybaseUserChanged, createTransaction] = (function() {
     var assetSourceAccount = '';
     var asset = {initialPrice: 10};
