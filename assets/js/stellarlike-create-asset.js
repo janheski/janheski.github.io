@@ -1,4 +1,21 @@
+/**
+ * Prerequisite to load on website StellarSDK:
+ * E.g.
+ * <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/5.0.2/stellar-sdk.js"></script>
+ */
+
 [stellarLike, assetPriceOnChange, keybaseUserChanged, createTransaction] = (function() {
+    const ENV = "TESTNET"; // "PUBLIC"
+    var server = "";
+    const timeout = 3600; // Transaction valid for this number of seconds
+
+    if(ENV == "TESTNET") {
+        server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
+    }
+    else if (ENV == "PUBLIC") {
+        server = new StellarSdk.Server('https://horizon.stellar.org');
+    }
+
     var assetSourceAccount = '';
     var asset = {initialPrice: 10};
 
@@ -14,8 +31,6 @@
 
     function start() {
         assetSourceAccount = getAssetAccount();
-
-        console.log("assetSourceAccount:" + assetSourceAccount);
     
         if(!assetSourceAccount) {
             console.log("create asset: Create asset!")
@@ -156,7 +171,6 @@
     }
 
     function createTransaction() {
-        info("");
         var assetNameOk = validateAssetName();
         
         if(!assetNameOk) {
@@ -169,11 +183,47 @@
                 error("Stellar Account ID is not ok");
             }
             else {
-                var decision = confirm("Are you sure?");
+                info("Starting generating transaction");
 
-                if(decision) {
-                    console.log("Starting generating transaction");
-                }
+                asset.sourceAccountKeyPair = StellarSdk.Keypair.random();
+                
+                (async function generateTransaction() {
+                    const account = await server.loadAccount(asset.stellarAccountId);
+                    const fee = await server.fetchBaseFee();
+                    var passPhrase = "";
+                    
+
+                    if(ENV == "TESTNET") {
+                        passPhrase = StellarSdk.Networks.TESTNET;
+                    }
+                    else if (ENV == "PUBLIC") {
+                        passPhrase = StellarSdk.Networks.PUBLIC;
+                    }
+
+                    const transaction = new StellarSdk.TransactionBuilder(account, {
+                        fee,
+                        networkPassphrase: passPhrase
+                    }).addOperation(StellarSdk.Operation.createAccount({
+                        destination: asset.sourceAccountKeyPair.publicKey(),
+                        startingBalance: "1"
+                    }))
+                    /*
+                    .addOperation(StellarSdk.Operation.payment({
+                        destination: receiverPublicKey,
+                        // The term native asset refers to lumens
+                        asset: StellarSdk.Asset.native(),
+                        // Specify 350.1234567 lumens. Lumens are divisible to seven digits past
+                        // the decimal. They are represented in JS Stellar SDK in string format
+                        // to avoid errors from the use of the JavaScript Number data structure.
+                        amount: '350.1234567',
+                    }))
+                    */
+                    .setTimeout(timeout)
+                    // .addMemo(StellarSdk.Memo.text('Hello world!'))
+                    .build();
+
+                    console.log("Transaction XDR: " + transaction.toXDR());
+                })();
             }
         }
     }
