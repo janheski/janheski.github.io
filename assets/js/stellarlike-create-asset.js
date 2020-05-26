@@ -99,7 +99,7 @@
             <input id="keybaseUser" name="keybaseUser" type="text" onchange="keybaseUserChanged()" />
             <br><label title="Please provide your Stellar Account ID (public key). If you provide keybase user, your public Stellar Account ID will be retrieved here." for="stellarAccountId">Your Stellar Account ID* </label>
             <input id="stellarAccountId" name="stellarAccountId" type="text" size="70" maxlength="56" minlength="56" />
-            <br><label title="" for="contentURL">Content URL: </label>
+            <br><label title="" for="contentURL">Content URL* </label>
             <input id="contentURL" name="contentURL" type="text" value="${getURL()}" />
             <br><a id="createTransaction" onclick="createTransaction()" class="stellarlikeLink">Create Transaction</a>
             <br><span id="message"></span>
@@ -172,9 +172,13 @@
 
     function createTransaction() {
         var assetNameOk = validateAssetName();
+        var contentUrlOk = validateContentURL();
         
         if(!assetNameOk) {
             error("Asset Name is not ok");
+        }
+        if(!contentUrlOk) {
+            error("Content URL cannot be empty. Please ensure this is correct URL to this content.")
         }
         else {
             var stellarAccountIdOk = validateStellarAccountId();
@@ -185,10 +189,13 @@
             else {
                 info("Starting generating transaction");
 
-                asset.sourceAccountKeyPair = StellarSdk.Keypair.random();
+                asset.issuerAccountKeyPair = StellarSdk.Keypair.random();
+
+                console.log('asset.issuerAccountKeyPair.publicKey(): ' + asset.issuerAccountKeyPair.publicKey());
+                console.log('asset.issuerAccountKeyPair.secret(): ' + asset.issuerAccountKeyPair.secret());
                 
                 (async function generateTransaction() {
-                    const account = await server.loadAccount(asset.stellarAccountId);
+                    const account = await server.loadAccount(asset.ownerAccountId);
                     const fee = await server.fetchBaseFee();
                     var passPhrase = "";
                     
@@ -200,27 +207,45 @@
                         passPhrase = StellarSdk.Networks.PUBLIC;
                     }
 
-                    const transaction = new StellarSdk.TransactionBuilder(account, {
+                    console.log('asset.amount: ' + asset.amount);
+
+                    const stellarAsset = new StellarSdk.Asset(asset.name, asset.issuerAccountKeyPair.publicKey());
+
+                    var transaction = new StellarSdk.TransactionBuilder(account, {
                         fee,
                         networkPassphrase: passPhrase
                     }).addOperation(StellarSdk.Operation.createAccount({
-                        destination: asset.sourceAccountKeyPair.publicKey(),
-                        startingBalance: "1"
+                        destination: asset.issuerAccountKeyPair.publicKey(),
+                        startingBalance: "2"
                     }))
-                    /*
+                    .addOperation(StellarSdk.Operation.changeTrust({
+                        asset: stellarAsset,
+                        limit: asset.amount.toString(),                        
+                    }))
                     .addOperation(StellarSdk.Operation.payment({
-                        destination: receiverPublicKey,
-                        // The term native asset refers to lumens
-                        asset: StellarSdk.Asset.native(),
-                        // Specify 350.1234567 lumens. Lumens are divisible to seven digits past
-                        // the decimal. They are represented in JS Stellar SDK in string format
-                        // to avoid errors from the use of the JavaScript Number data structure.
-                        amount: '350.1234567',
+                        destination: asset.ownerAccountId,
+                        asset: stellarAsset,
+                        amount: asset.amount.toString(),
+                        source: asset.issuerAccountKeyPair.publicKey()
+                    }));
+
+                    
+                    transaction = transaction.addOperation(StellarSdk.Operation.manageData({
+                        source: asset.issuerAccountKeyPair.publicKey(),
+                        name: 'Content URL',
+                        value: asset.contentURL
+                    }));
+
+                    transaction = transaction.addOperation(StellarSdk.Operation.setOptions({
+                        source: asset.issuerAccountKeyPair.publicKey(),
+                        lowThreshold: 2,
+                        medThreshold: 2,
+                        highThreshold: 2,                                 
                     }))
-                    */
                     .setTimeout(timeout)
                     // .addMemo(StellarSdk.Memo.text('Hello world!'))
                     .build();
+                    //.sign(asset.issuerAccountKeyPair);
 
                     console.log("Transaction XDR: " + transaction.toXDR());
                 })();
@@ -241,10 +266,20 @@
         }
     }
 
-    function validateStellarAccountId() {
-        asset.stellarAccountId = document.getElementById('stellarAccountId').value;
+    function validateContentURL() {
+        asset.contentURL = document.getElementById('contentURL').value;
+        if(asset.contentURL.length > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
-        if(asset.stellarAccountId.length == 56) {
+    function validateStellarAccountId() {
+        asset.ownerAccountId = document.getElementById('stellarAccountId').value;
+
+        if(asset.ownerAccountId.length == 56) {
             return true;
         }
         else {
