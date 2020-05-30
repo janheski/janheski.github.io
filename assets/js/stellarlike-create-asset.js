@@ -5,9 +5,10 @@
  */
 
 [stellarLike, assetPriceOnChange, keybaseUserChanged, createTransaction] = (function() {
-    const ENV = "TESTNET"; // "PUBLIC"
-    var server = "";
+    const ENV = "TESTNET"; // "PUBLIC"    
     const timeout = 3600; // Transaction valid for this number of seconds
+
+    var server = "";
 
     if(ENV == "TESTNET") {
         server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
@@ -61,9 +62,10 @@
     }
 
     function stellarLike() {
-        var stellarLikeContent = readStellarLikeContent();
-        asset.amount = stellarLikeContent.length;
-        var assetNameProposalText = assetNameProposal(stellarLikeContent);
+        asset.stellarLikeContent = readStellarLikeContent();
+        
+        asset.amount = asset.stellarLikeContent.length;
+        var assetNameProposalText = assetNameProposal(asset.stellarLikeContent);
         buildStellarLikeForm(assetNameProposalText);
     }
 
@@ -111,6 +113,7 @@
 
     function assetPriceOnChange() {
         var maxEarning = calculateMaxEarning();
+        asset.price = getPrice();
         document.getElementById('maxEarning').innerText = maxEarning;
     }
 
@@ -118,6 +121,11 @@
         var price = document.getElementById('assetPriceInput') ? document.getElementById('assetPriceInput').value : asset.initialPrice;
         var maxEarning = price * asset.amount;
         return maxEarning;
+    }
+
+    function getPrice() {
+        var price = document.getElementById('assetPriceInput') ? document.getElementById('assetPriceInput').value : asset.initialPrice;
+        return price;
     }
 
     function keybaseUserChanged() {
@@ -190,11 +198,13 @@
                 info("Starting generating transaction");
 
                 asset.issuerAccountKeyPair = StellarSdk.Keypair.random();
-
                 console.log('asset.issuerAccountKeyPair.publicKey(): ' + asset.issuerAccountKeyPair.publicKey());
-                console.log('asset.issuerAccountKeyPair.secret(): ' + asset.issuerAccountKeyPair.secret());
                 
                 (async function generateTransaction() {
+                    const hash = await digestMessage(asset.stellarLikeContent);
+                    console.log("hash: " + hash.toString());
+                    asset.contentHash = hash;
+
                     const account = await server.loadAccount(asset.ownerAccountId);
                     const fee = await server.fetchBaseFee();
                     var passPhrase = "";
@@ -227,25 +237,30 @@
                         asset: stellarAsset,
                         amount: asset.amount.toString(),
                         source: asset.issuerAccountKeyPair.publicKey()
-                    }));
-
-                    
-                    transaction = transaction.addOperation(StellarSdk.Operation.manageData({
-                        source: asset.issuerAccountKeyPair.publicKey(),
-                        name: 'Content URL',
-                        value: asset.contentURL
-                    }));
-
-                    transaction = transaction.addOperation(StellarSdk.Operation.setOptions({
-                        source: asset.issuerAccountKeyPair.publicKey(),
-                        lowThreshold: 2,
-                        medThreshold: 2,
-                        highThreshold: 2,                                 
                     }))
-                    .setTimeout(timeout)
-                    // .addMemo(StellarSdk.Memo.text('Hello world!'))
+                    .addOperation(StellarSdk.Operation.manageData({
+                        source: asset.issuerAccountKeyPair.publicKey(),
+                        name: 'Content Hash',
+                        value: asset.contentHash
+                    }))              
+                    .addOperation(StellarSdk.Operation.setOptions({
+                        source: asset.issuerAccountKeyPair.publicKey(),
+                        lowThreshold: 0,
+                        medThreshold: 0,
+                        highThreshold: 0,                                 
+                        masterWeight: 0
+                    }))
+                    .addOperation(StellarSdk.Operation.manageSellOffer({
+                        selling: stellarAsset,
+                        buying: StellarSdk.Asset.native(),
+                        amount: asset.amount.toString(),
+                        price: asset.price,
+                        offerId: 0
+                    }))
+                    .setTimeout(timeout)                                      
                     .build();
-                    //.sign(asset.issuerAccountKeyPair);
+
+                    transaction.sign(asset.issuerAccountKeyPair);
 
                     console.log("Transaction XDR: " + transaction.toXDR());
                 })();
@@ -285,6 +300,15 @@
         else {
             return false;
         }
+    }
+
+    async function digestMessage(message) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(message);
+        const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer)); 
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        return hashHex;
     }
 
     function error(message) {
