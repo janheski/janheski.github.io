@@ -4,6 +4,7 @@ description: Jak Bóg kocha
 summary: Jak Bóg kocha
 issuing_account: 
 tags: [jezus]
+lang: pl_PL
 ---
 
 Tak kocha Bóg na przykładzie historii Jerozolimy. Jeden rozdział, 63 wersety.
