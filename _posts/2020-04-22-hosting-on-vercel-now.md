@@ -4,6 +4,7 @@ description: That's really easy to host jekyll site on vercel (previous zeit now
 summary: That's really easy to host jekyll site on vercel (previous zeit now.sh)
 issuing_account: 12345
 tags: [jekyll, vercel]
+lang: en_US
 ---
 
 It's very easy to host ready jekyll site on vercel.

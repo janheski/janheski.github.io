@@ -3,6 +3,7 @@ title: Create and host personal site with jekyll and keybase
 description: It's easy to create personal site with jekyll and host it on keybase.
 summary: In summary it's easy to create personal site with jekyll and host it on keybase.
 tags: [keybase,jekyll]
+lang: en_US
 ---
 
 It's easy to create personal site like this one with jekyll and host it on keybase.

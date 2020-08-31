@@ -1,0 +1,12 @@
+<div class="links">
+   {% if page.previous %}
+   <div class="previous">
+      Previous post: <a href="{{ page.previous.url }}">{{page.previous.title}}</a>
+   </div>
+   {% endif %}
+   {% if page.next %}
+   <div class="next">
+      Next post: <a href="{{ page.next.url }}">{{page.next.title}}</a>
+   </div>
+   {% endif %}
+</div>
