@@ -17,6 +17,8 @@ Once I had step one working, I've replaced whole project folder with this theme 
 #### 3. Change content
 Change content as you like, it needs to be your site :)
 
+To test locally run `bundle exec jekyll serve`
+
 #### 4. Build
 (Optional step for upgrade to delete `Gemfile.lock`).  
 Build with command as `bundle exec jekyll build`

@@ -14,11 +14,11 @@ Vercel was previously called now.sh or zeit...
 In fact all what I've done is run `now` in cmd. 
 If You don't have now vercel already installed on Your machine You need to do it first.
 
-#### 1. Open command line `cmd` and type `now`
+#### 1. Open command line `cmd` and type `vercel`
 If it doesn't work, you probably need to install now.
 
-#### 1b. Install now
-type `npm i now@latest -g` and it should help. Then return to point 1.
+#### 1b. Install Vercel
+type `npm i -g vercel` and it should help. Then return to point 1.
 
 #### 1c. Setup vercel account
 You probably need to setup vercel account so follow their guide.
@@ -28,4 +28,4 @@ In command line in your jekyll project folder  `now`.
 
 I have accepted all default settings and chosen project name as `janheski`. 
 
-After that I had to wait for few minutes but eventually my site was build, deployed and ready automatically on [https://janheski.now.sh](https://janheski.now.sh) :D
+After that I had to wait for few minutes but eventually my site was build, deployed and ready automatically on [https://janheski.vercel.app](https://janheski.vercel.app/) :D
