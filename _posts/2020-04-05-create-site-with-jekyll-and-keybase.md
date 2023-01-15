@@ -18,6 +18,7 @@ Once I had step one working, I've replaced whole project folder with this theme 
 Change content as you like, it needs to be your site :)
 
 #### 4. Build
+(Optional step for upgrade to delete `Gemfile.lock`)
 Build with command as `bundle exec jekyll build`
 
 #### 5. Deploy
