@@ -2,8 +2,8 @@
 title: Jak Bóg kocha
 description: Jak Bóg kocha
 summary: Jak Bóg kocha
-issuing_account: 
-tags: [jezus]
+issuing_account:
+tags: [jezus, language-pl]
 lang: pl_PL
 ---
 
