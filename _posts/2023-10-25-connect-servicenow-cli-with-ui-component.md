@@ -2,7 +2,7 @@
 title: Connect ServiceNow CLI with UI Component
 description: Connect ServiceNow CLI with developer instance and connect UI Component
 summary: How to connect ServiceNow CLI with developer SN instance and connect UI Component for UI Builder
-tags: [ServiceNow, UI-Builder, SN-CLI]
+tags: [servicenow, ui-builder, sn-cli]
 lang: en_US
 ---
 
